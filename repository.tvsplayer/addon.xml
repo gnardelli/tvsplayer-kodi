@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- @BASE_URL@ is replaced by kodi/build.py with the web address where the repository is hosted -->
+<addon id="repository.tvsplayer" name="TVS Player Repository" version="1.0.0" provider-name="TVS Player">
+    <extension point="xbmc.addon.repository" name="TVS Player Repository">
+        <dir>
+            <info compressed="false">@BASE_URL@addons.xml</info>
+            <checksum>@BASE_URL@addons.xml.md5</checksum>
+            <datadir zip="true">@BASE_URL@zips/</datadir>
+        </dir>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en_GB">Installs and updates TVS Player</summary>
+        <summary lang="it_IT">Installa e aggiorna TVS Player</summary>
+        <description lang="en_GB">Repository of TVS Player: your own M3U playlists and free radio. Updates are installed automatically.</description>
+        <description lang="it_IT">Repository di TVS Player: le tue playlist M3U e radio gratuite. Gli aggiornamenti si installano da soli.</description>
+        <platform>all</platform>
+        <license>GPL-2.0-or-later</license>
+        <assets>
+            <icon>icon.png</icon>
+        </assets>
+    </extension>
+</addon>

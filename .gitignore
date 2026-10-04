@@ -1,0 +1,7 @@
+# Build output and test leftovers
+dist/
+tests/_profile/
+tests/_www/
+__pycache__/
+*.pyc
+*.log
