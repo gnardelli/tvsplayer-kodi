@@ -176,7 +176,8 @@ class Plugin(object):
         for url in links:
             if net.is_reachable(url, timeout=timeout):
                 return url
-        return None
+        # None answered in time (slow live streams): let Kodi try the first one anyway
+        return links[0]
 
     def do_play(self):
         channel = self._find_channel()
@@ -301,11 +302,10 @@ class Plugin(object):
             if playlist["kind"] == KIND_FILE:
                 f = xbmcvfs.File(playlist["source"])
                 try:
-                    text = f.read()
+                    text = bytes(f.readBytes())   # raw bytes: decoded below like downloads
                 finally:
                     f.close()
-                if isinstance(text, bytes):
-                    text = text.decode("utf-8", "replace")
+                text = net.decode_text(text)
             else:
                 text = net.get_text(playlist["source"])
             entries = m3u.parse(text, playlist["name"], playlist["type_mode"])

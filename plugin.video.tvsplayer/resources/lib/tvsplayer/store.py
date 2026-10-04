@@ -8,6 +8,7 @@ favorites.json      [{name, logo, group, url, type}]
 import io
 import json
 import os
+import tempfile
 import time
 import uuid
 
@@ -35,12 +36,17 @@ class Store(object):
             return default
 
     def _save(self, name, data):
-        tmp = self._path(name + ".tmp")
-        with io.open(tmp, "w", encoding="utf-8") as f:
-            f.write(json.dumps(data, ensure_ascii=False))
-        if os.path.exists(self._path(name)):
-            os.remove(self._path(name))
-        os.rename(tmp, self._path(name))
+        """Write to a unique temporary file, then replace the old file in one step: an interrupted
+        save never leaves the data missing."""
+        fd, tmp = tempfile.mkstemp(prefix=name + ".", suffix=".tmp", dir=self.dir)
+        try:
+            with io.open(fd, "w", encoding="utf-8") as f:
+                f.write(json.dumps(data, ensure_ascii=False))
+            os.replace(tmp, self._path(name))
+        except Exception:
+            if os.path.exists(tmp):
+                os.remove(tmp)
+            raise
 
     # ── playlists ────────────────────────────────────────────────────────
     def playlists(self):

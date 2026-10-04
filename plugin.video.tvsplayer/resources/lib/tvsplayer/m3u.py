@@ -10,6 +10,8 @@ Lines that are just an address (no #EXTINF) are accepted too.
 """
 import re
 
+from . import net
+
 TV = "tv"
 RADIO = "radio"
 
@@ -57,8 +59,7 @@ def parse(text, default_group, type_mode=TYPE_AUTO):
             title = (name or "").strip() or attrs.get("tvg-name", "").strip() or \
                 url.split("?")[0].rstrip("/").rsplit("/", 1)[-1] or url
             group = attrs.get("group-title", "").strip() or (group_line or "").strip() or default_group
-            if headers and "|" not in url:
-                url = url + "|" + "&".join("%s=%s" % (k, v) for k, v in headers.items())
+            url = net.with_headers(url, headers)
             entries.append({
                 "name": title,
                 "logo": attrs.get("tvg-logo", "").strip(),

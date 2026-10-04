@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addons>
-<addon id="plugin.video.tvsplayer" name="TVS Player" version="1.0.0" provider-name="TVS Player">
+<addon id="plugin.video.tvsplayer" name="TVS Player" version="1.0.1" provider-name="TVS Player">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
     </requires>
@@ -21,7 +21,8 @@ Canali ordinati per categoria con loghi e ricerca. I canali con più flussi salt
         <platform>all</platform>
         <license>GPL-2.0-or-later</license>
         <source>https://github.com/gnardelli/tvsplayer-kodi</source>
-        <news>1.0.0 - First release: M3U playlists (web address or file), free radio by country, link fallback, favourites, search.</news>
+        <news>1.0.1 - Safer saving of playlists and favourites; slow streams are still tried; stream headers with "&amp;" (e.g. Referer) kept intact; accented names in local Latin-1 playlists.
+1.0.0 - First release: M3U playlists (web address or file), free radio by country, link fallback, favourites, search.</news>
         <assets>
             <icon>resources/icon.png</icon>
             <fanart>resources/fanart.jpg</fanart>

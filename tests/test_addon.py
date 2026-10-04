@@ -183,6 +183,36 @@ def main():
     check(oks and oks[-1].startswith("Could not load the playlist"), "error dialog shown")
     check("Broken" not in labels(call("action=playlists")), "failed playlist not kept")
 
+    print("9. Review fixes (1.0.1)")
+    from tvsplayer import net, store  # noqa: E402
+    referer = "https://site.example/page?token=a&expires=b"
+    text = "#EXTM3U\n#EXTINF:-1,Protected\n#EXTVLCOPT:http-referrer=%s\nhttp://h/p.m3u8\n" % referer
+    url = m3u.parse(text, "G")[0]["url"]
+    check(net._split_kodi_url(url)[1].get("Referer") == referer, "Referer with & survives: %s" % url)
+
+    latin = os.path.join(WWW, "latin1.m3u")
+    with open(latin, "wb") as f:
+        f.write(u"#EXTM3U\n#EXTINF:-1 group-title=\"Città\",Caffè TV\nhttp://h/c.m3u8\n"
+                u"#EXTINF:-1 group-title=\"Città\",Caffè TV\nhttp://h/c2.m3u8\n".encode("latin-1"))
+    K.ANSWERS[:] = [latin, "Latin", 0]
+    call("action=pl_add_file")
+    names = labels(call("action=channels&type=tv&group=" + u"Città"))
+    check(names == [u"Caffè TV"], "Latin-1 file keeps accents: %s" % names)
+
+    s = store.Store(K.PROFILE)
+    s.add_favorite({"name": "Keep", "logo": "", "group": "G", "url": "http://k", "type": "tv"})
+    leftovers = [n for n in os.listdir(K.PROFILE) if n.endswith(".tmp")]
+    check(any(f["name"] == "Keep" for f in s.favorites()) and not leftovers, "safe save, no temp files left")
+
+    original = net.is_reachable
+    net.is_reachable = lambda u, timeout=4: False      # every link too slow / not answering
+    try:
+        K.RESOLVED[:] = []
+        call(u"action=play&type=tv&group=Città&name=Caffè+TV")   # 2 links
+        check(K.RESOLVED and K.RESOLVED[-1][0], "slow links: Kodi still tries the first one")
+    finally:
+        net.is_reachable = original
+
     print("\n%s" % ("ALL TESTS PASSED" if not check.failed else "%d TEST(S) FAILED" % check.failed))
     shutil.rmtree(K.PROFILE, ignore_errors=True)
     shutil.rmtree(WWW, ignore_errors=True)

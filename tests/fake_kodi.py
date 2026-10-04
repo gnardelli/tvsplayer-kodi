@@ -90,7 +90,10 @@ class _File(object):
         self.f = open(path, "rb")
 
     def read(self):
-        return self.f.read().decode("utf-8")
+        return self.f.read().decode("utf-8", "replace")   # like Kodi: always UTF-8
+
+    def readBytes(self):
+        return bytearray(self.f.read())
 
     def close(self):
         self.f.close()

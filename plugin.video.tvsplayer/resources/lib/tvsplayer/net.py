@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 """Small HTTP helpers (standard library only)."""
 try:
+    from urllib.parse import quote, unquote
     from urllib.request import Request, urlopen
 except ImportError:  # pragma: no cover
+    from urllib import quote, unquote
     from urllib2 import Request, urlopen
 
 USER_AGENT = "TVSPlayer-Kodi/1.0"
@@ -15,8 +17,28 @@ def _split_kodi_url(url):
     for part in options.split("&"):
         key, _, value = part.partition("=")
         if key:
-            headers[key] = value
+            headers[key] = unquote(value)
     return address, headers
+
+
+def with_headers(url, headers):
+    """Kodi's 'url|Header=value&...' syntax; values are URL-encoded (Kodi decodes them), so a
+    '&', '|' or '+' inside a value (e.g. a Referer with a query string) stays intact."""
+    if not headers or "|" in url:
+        return url
+    return url + "|" + "&".join("%s=%s" % (k, quote(v, safe="/:;,()=@")) for k, v in headers.items())
+
+
+def decode_text(raw):
+    """Playlist bytes -> text: UTF-8 (with or without BOM), else Latin-1."""
+    if not isinstance(raw, bytes):
+        return raw
+    for encoding in ("utf-8-sig", "latin-1"):
+        try:
+            return raw.decode(encoding)
+        except UnicodeDecodeError:
+            continue
+    return raw.decode("utf-8", "replace")
 
 
 def get_text(url, timeout=20):
@@ -24,15 +46,9 @@ def get_text(url, timeout=20):
     headers.setdefault("User-Agent", USER_AGENT)
     response = urlopen(Request(address, headers=headers), timeout=timeout)
     try:
-        raw = response.read()
+        return decode_text(response.read())
     finally:
         response.close()
-    for encoding in ("utf-8-sig", "latin-1"):
-        try:
-            return raw.decode(encoding)
-        except UnicodeDecodeError:
-            continue
-    return raw.decode("utf-8", "replace")
 
 
 def is_reachable(url, timeout=4):
