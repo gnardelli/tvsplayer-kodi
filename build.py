@@ -95,20 +95,36 @@ def main():
     with open(os.path.join(repo, "addons.xml.md5"), "w", encoding="utf-8") as f:
         f.write(hashlib.md5(addons.encode("utf-8")).hexdigest())
     # Kodi's File manager ("Add source") browses an address through its HTML links: put the
-    # repository zip at the top level with a small index page, so users can pick it from Kodi.
+    # repository zip at the top level, so users can pick it from Kodi.
     repo_zip = "repository.tvsplayer-%s.zip" % version_of(addon_xml("repository.tvsplayer", base_url))
     shutil.copy(os.path.join(DIST, repo_zip), os.path.join(repo, repo_zip))
-    index = (
-        '<!DOCTYPE html>\n'
-        '<html><head><meta charset="utf-8"><title>TVS Player for Kodi</title></head>\n'
-        '<body>\n<h1>TVS Player for Kodi</h1>\n'
-        '<p>In Kodi: Add-ons &rarr; Install from zip file &rarr; this source &rarr; %s</p>\n'
-        '<a href="%s">%s</a>\n'
-        '</body></html>\n'
-    ) % (repo_zip, repo_zip, repo_zip)
-    with open(os.path.join(repo, "index.html"), "w", encoding="utf-8", newline="\n") as f:
-        f.write(index)
+    write_indexes(repo, repo_zip)
     print("repository folder: %s  (upload its content to %s)" % (repo, base_url))
+
+
+def write_indexes(repo, repo_zip):
+    """An index.html listing EVERY entry, in every folder.
+
+    Kodi remembers the listing of a browsed folder: once a user has opened the source in
+    "Install from zip file", a file missing from the listing (e.g. addons.xml.md5) is treated
+    as non-existent and the repository fails with "Could not connect to repository".
+    """
+    for folder, dirs, files in os.walk(repo):
+        dirs.sort()
+        names = sorted(f for f in files if f != "index.html")
+        if folder == repo:
+            names.remove(repo_zip)
+            names.insert(0, repo_zip)   # the one users need first
+        links = "\n".join('<a href="%s/">%s/</a><br>' % (d, d) for d in dirs)
+        links += "\n" + "\n".join('<a href="%s">%s</a><br>' % (n, n) for n in names)
+        intro = ""
+        if folder == repo:
+            intro = ("<h1>TVS Player for Kodi</h1>\n<p>In Kodi: Add-ons &rarr; Install from zip file "
+                     "&rarr; this source &rarr; %s</p>\n" % repo_zip)
+        page = ('<!DOCTYPE html>\n<html><head><meta charset="utf-8"><title>TVS Player for Kodi</title>'
+                '</head>\n<body>\n%s%s\n</body></html>\n') % (intro, links.strip())
+        with open(os.path.join(folder, "index.html"), "w", encoding="utf-8", newline="\n") as f:
+            f.write(page)
 
 
 if __name__ == "__main__":
