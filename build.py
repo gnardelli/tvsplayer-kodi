@@ -36,20 +36,27 @@ def version_of(xml):
 
 
 def make_zip(addon_id, xml, target):
-    """Zip with the add-on folder at the root (what Kodi expects)."""
+    """Zip with the add-on folder at the root (what Kodi expects).
+
+    Reproducible: fixed order and timestamps, so an unchanged add-on gives an identical zip.
+    """
     source = os.path.join(HERE, addon_id)
     with zipfile.ZipFile(target, "w", zipfile.ZIP_DEFLATED) as z:
         for root, dirs, files in os.walk(source):
-            dirs[:] = [d for d in dirs if d not in SKIP_DIRS]
-            for name in files:
+            dirs[:] = sorted(d for d in dirs if d not in SKIP_DIRS)   # also fixes the walk order
+            for name in sorted(files):
                 if name.endswith(SKIP_FILES):
                     continue
                 path = os.path.join(root, name)
                 arc = os.path.join(addon_id, os.path.relpath(path, source)).replace("\\", "/")
+                info = zipfile.ZipInfo(arc, date_time=(2020, 1, 1, 0, 0, 0))
+                info.compress_type = zipfile.ZIP_DEFLATED
+                info.external_attr = 0o644 << 16
                 if name == "addon.xml" and root == source:
-                    z.writestr(arc, xml)       # with the real repository address
+                    z.writestr(info, xml)      # with the real repository address
                 else:
-                    z.write(path, arc)
+                    with open(path, "rb") as f:
+                        z.writestr(info, f.read())
 
 
 def main():
