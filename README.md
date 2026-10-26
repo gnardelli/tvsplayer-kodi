@@ -8,6 +8,12 @@ automatically, and favourites can be reordered.
 TVS Player is only a player: it does not include or provide any TV channels or playlists.
 Add only content you have the right to use.
 
+Also available:
+- **Android phones and tablets** on Google Play:
+  [TVS Player](https://play.google.com/store/apps/details?id=com.tvsplayer.app) (free) and
+  [TVS Player Pro](https://play.google.com/store/apps/details?id=com.tvs_player_pro) (TV guide, rewind, recordings)
+- **Any web browser**, nothing to install: [tvsplayer.app](https://tvsplayer.app)
+
 ## Install in Kodi (Kodi 19 Matrix or newer)
 
 1. **Settings → System → Add-ons → Unknown sources: ON**
