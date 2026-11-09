@@ -112,7 +112,8 @@ def main():
 
     K.Dialog.select = select
     root = call()
-    check(labels(root) == ["TV", "Radio", "Favourites", "Search", "Playlists"], "main menu")
+    check(labels(root) == ["TV", "Radio", "Favourites", "Search", "Playlists", "TVS Player in the browser and on Android"],
+          "main menu")
     check(K.SETTINGS["first_run_done"] == "true", "radio offered only once")
     if not OFFLINE:
         picked = [v for k, v in K.LOG if k == "select-preselected"]
@@ -132,6 +133,16 @@ def main():
     tv = call("action=groups&type=tv")
     # 3 channels: the two "News One" entries are one channel with 2 links
     check(labels(tv) == ["All (3)", "News (1)", "Sport (1)", "My list (1)"], "TV categories %s" % labels(tv))
+
+    print("3b. Filter by playlist (1.1.0)")
+    pls = call("action=playlists")
+    my_id = [i[0] for i in pls if i[1] == "My list"][0].split("id=")[1]
+    menu = labels(call("action=playlist&id=" + my_id))
+    check(menu[:2] == ["TV channels of this playlist", "Radio stations of this playlist"], "playlist menu %s" % menu)
+    only = labels(call("action=groups&type=tv&pl=" + my_id))
+    check(only == ["All (3)", "News (1)", "Sport (1)", "My list (1)"], "categories of that playlist %s" % only)
+    check(labels(call("action=channels&type=tv&group=&pl=" + my_id)) == labels(call("action=channels&type=tv&group=")),
+          "channels of that playlist")
 
     print("4. Channels and fallback")
     channels = call("action=channels&type=tv&group=News")
@@ -204,14 +215,22 @@ def main():
     leftovers = [n for n in os.listdir(K.PROFILE) if n.endswith(".tmp")]
     check(any(f["name"] == "Keep" for f in s.favorites()) and not leftovers, "safe save, no temp files left")
 
-    original = net.is_reachable
+    original, original_poor = net.is_reachable, net.is_poor_connection
     net.is_reachable = lambda u, timeout=4: False      # every link too slow / not answering
+    net.is_poor_connection = lambda: False
     try:
         K.RESOLVED[:] = []
         call(u"action=play&type=tv&group=Città&name=Caffè+TV")   # 2 links
         check(K.RESOLVED and K.RESOLVED[-1][0], "slow links: Kodi still tries the first one")
+
+        print("10. Poor connection (1.1.0)")
+        net.is_poor_connection = lambda: True
+        call(u"action=play&type=tv&group=Città&name=Caffè+TV")
+        notes = [v for k, v in K.LOG if k == "notify"]
+        check(notes and notes[-1].startswith("Poor internet connection"), "says so: %s" % notes[-1:])
     finally:
-        net.is_reachable = original
+        net.is_reachable, net.is_poor_connection = original, original_poor
+    check(net.is_poor_connection() is False, "real check on this PC's internet: not poor")
 
     print("\n%s" % ("ALL TESTS PASSED" if not check.failed else "%d TEST(S) FAILED" % check.failed))
     shutil.rmtree(K.PROFILE, ignore_errors=True)

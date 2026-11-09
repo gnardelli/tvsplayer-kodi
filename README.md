@@ -29,6 +29,9 @@ Updates are installed automatically.
 - **Playlists → Add M3U playlist (web address / file)**, or **Add free radio stations by country**
 - **TV** and **Radio**: channels by category; **Search** across all playlists
 - To reload a playlist that changed online: **Playlists → your playlist → Refresh**
+- Only the channels of one playlist: **Playlists → your playlist → TV channels / Radio stations of this playlist**
+- In 9 languages (Kodi's language): English, Italian, French, German, Spanish, Portuguese, Polish, Chinese, Japanese
+- When no link answers because the internet is slow or missing, a message says so
 
 ## For developers
 
@@ -38,6 +41,7 @@ Updates are installed automatically.
 | `repository.tvsplayer/` | the repository add-on (address filled in by `build.py`) |
 | `docs/` | the published Kodi repository (GitHub Pages) |
 | `tests/` | tests that run without Kodi: `python tests/test_addon.py` |
+| `tools/po.py` | translations: new texts in English/Italian + the other 7 languages (`python tools/po.py`) |
 
 Publish a new version: raise `version` and `<news>` in `plugin.video.tvsplayer/addon.xml`, then
 
