@@ -57,10 +57,10 @@ def start_server():
     return server.server_address[1]
 
 
-def call(query=""):
+def call(query="", handle=1):
     """Runs the add-on like Kodi does for a menu/action; returns the listed items."""
     del K.DIRECTORY[:]
-    run([BASE, "1", "?" + query if query else ""])
+    run([BASE, str(handle), "?" + query if query else ""])
     return list(K.DIRECTORY)
 
 
@@ -169,9 +169,11 @@ def main():
 
     print("6. Search")
     K.ANSWERS[:] = ["radio"]
-    call("action=search")
+    call("action=search_ask", handle=-1)
     update = [v for k, v in K.LOG if k == "builtin"][-1]
-    check("q=radio" in update, "re-opens with the query: %s" % update)
+    check("q=radio" in update and "replace" not in update, "opens the results with the query: %s" % update)
+    K.ANSWERS[:] = ["radio"]
+    check("Radio Rock" in labels(call("action=search")), "old address: asks and lists at once")
     found = call("action=search&q=radio")
     # (online, the free Italian stations from the first start match "radio" too)
     check(labels(found)[-2:] == ["Radio Rock", "Radio Pop"] and "News One" not in labels(found),

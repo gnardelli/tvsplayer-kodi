@@ -120,7 +120,11 @@ class Plugin(object):
         self._folder(_(30000), "DefaultTVShows.png", action="groups", type=m3u.TV)
         self._folder(_(30001), "DefaultMusicSongs.png", action="groups", type=m3u.RADIO)
         self._folder(_(30002), "DefaultFavourites.png", action="favorites")
-        self._folder(_(30004), "DefaultAddonsSearch.png", action="search")
+        # Not a folder: Kodi runs it as an action, so after the keyboard the results list can open
+        # (from inside a folder listing Kodi ignores Container.Update and the search showed nothing)
+        item = xbmcgui.ListItem(label=_(30004))
+        item.setArt({"icon": "DefaultAddonsSearch.png", "thumb": "DefaultAddonsSearch.png", "fanart": FANART})
+        xbmcplugin.addDirectoryItem(self.handle, self.url(action="search_ask"), item, isFolder=False)
         self._folder(_(30003), "DefaultPlaylist.png", action="playlists")
         self._folder(_(30045), ICON, action="about")
         self._end()
@@ -260,16 +264,20 @@ class Plugin(object):
         xbmc.executebuiltin("Container.Refresh")
 
     # ── search ───────────────────────────────────────────────────────────
+    def do_search_ask(self):
+        """Search entry of the main menu (an action, not a folder): keyboard, then the results list."""
+        query = xbmcgui.Dialog().input(_(30034)).strip()
+        if query:
+            # The query is in the address, so going back to the results does not ask again
+            xbmc.executebuiltin("Container.Update(%s)" % self.url(action="search", q=query))
+
     def do_search(self):
         query = self.params.get("q")
         if query is None:
-            query = xbmcgui.Dialog().input(_(30034))
+            # Old address (Kodi favourites, widgets): ask here and list the results at once
+            query = xbmcgui.Dialog().input(_(30034)).strip()
             if not query:
-                return self._end_action()
-            # Re-open with the query in the address, so going back does not ask again
-            xbmcplugin.endOfDirectory(self.handle, succeeded=False)
-            xbmc.executebuiltin("Container.Update(%s,replace)" % self.url(action="search", q=query))
-            return
+                return self._end()
         for stream_type in (m3u.TV, m3u.RADIO):
             for channel in self.store.channels(stream_type, query=query):
                 self._channel_item(channel)
