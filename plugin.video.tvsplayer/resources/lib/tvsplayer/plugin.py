@@ -108,11 +108,16 @@ class Plugin(object):
         _set_info(item, channel["name"], stream_type, channel["group"])
         item.setProperty("IsPlayable", "true")
         key = {"type": stream_type, "group": channel["group"], "name": channel["name"]}
+        
+        # Wrap string 30021 in Kodi COLOR tags
+        fav_label = "[B][COLOR pink]%s[/COLOR][/B]" % _(30021)
+        
         item.addContextMenuItems([
             (_(30023), "RunPlugin(%s)" % self.url(action="links", **key)),
-            (_(30021), "RunPlugin(%s)" % self.url(action="fav_add", **key)),
+            (fav_label, "RunPlugin(%s)" % self.url(action="fav_add", **key)),
         ])
         xbmcplugin.addDirectoryItem(self.handle, self.url(action="play", **key), item, isFolder=False)
+
 
     # ── main menu ────────────────────────────────────────────────────────
     def do_root(self):
