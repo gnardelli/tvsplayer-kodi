@@ -7,6 +7,8 @@ Understands the usual IPTV-style format:
     #EXTVLCOPT:http-user-agent=Mozilla/5.0
     http://stream-address
 Lines that are just an address (no #EXTINF) are accepted too.
+
+Also serializes store entries back to M3U (export()).
 """
 import re
 
@@ -93,3 +95,23 @@ def _type_of(type_mode, attrs, group, url):
         "radio" in group.lower() or \
         path.endswith(_AUDIO_EXTENSIONS)
     return RADIO if radio else TV
+
+
+def _attr(value):
+    return value.replace('"', "'")
+
+
+def export(entries):
+    """Serialize store entries (dict with name/logo/group/url/type) to M3U text.
+
+    Only #EXTINF:-1 with tvg-logo and the channel name is written: no group-title,
+    no radio attribute, and any Kodi 'url|Header=value' suffix is dropped so the
+    file stays portable.
+    """
+    lines = ["#EXTM3U"]
+    for e in entries:
+        url = e.get("url", "").split("|", 1)[0]   # strip Kodi header suffix
+        lines.append('#EXTINF:-1 tvg-logo="%s",%s'
+                     % (_attr(e.get("logo", "")), e.get("name", "")))
+        lines.append(url)
+    return "\n".join(lines) + "\n"
