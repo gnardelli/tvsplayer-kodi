@@ -135,15 +135,16 @@ class Plugin(object):
         self._folder(_(30000), "DefaultTVShows.png", action="groups", type=m3u.TV)
         self._folder(_(30001), "DefaultMusicSongs.png", action="groups", type=m3u.RADIO)
         self._folder(_(30002), "DefaultFavourites.png", action="favorites")
-        # Not a folder: Kodi runs it as an action, so after the keyboard the results list can open
-        # (from inside a folder listing Kodi ignores Container.Update and the search showed nothing)
+        
+        # Standard search
         item = xbmcgui.ListItem(label=_(30004))
         item.setArt({"icon": "DefaultAddonsSearch.png", "thumb": "DefaultAddonsSearch.png", "fanart": FANART})
-        xbmcplugin.addDirectoryItem(self.handle, self.url(action="search_ask"), item, isFolder=False)
+        xbmcplugin.addDirectoryItem(self.handle, self.url(action="search_ask"), item, isFolder=False)       
+        
         self._folder(_(30003), "DefaultPlaylist.png", action="playlists")
         self._folder(_(30045), ICON, action="about")
         self._end()
-
+        
     def do_about(self):
         """tvsplayer.app and the Android apps (Kodi cannot open a web page: the address is shown)."""
         xbmcgui.Dialog().ok(ADDON_NAME, _(30046))
@@ -422,10 +423,12 @@ class Plugin(object):
                 (_(30019), "RunPlugin(%s)" % self.url(action="pl_delete", id=p["id"])),
             ])
             xbmcplugin.addDirectoryItem(self.handle, self.url(action="playlist", id=p["id"]), item, isFolder=True)
+            
         self._folder("[B]+ %s[/B]" % _(30006), "DefaultAddSource.png", action="pl_add_url")
         self._folder("[B]+ %s[/B]" % _(30007), "DefaultAddSource.png", action="pl_add_file")
         self._folder("[B]+ %s[/B]" % _(30008), "DefaultAddSource.png", action="pl_add_radio")
         self._folder("[B]+ %s[/B]" % _(30105), "DefaultAddSource.png", action="pl_add_genre")
+        self._folder("[B]+ %s[/B]" % _(30114), "DefaultAddSource.png", action="pl_search_radio")
         self._end()
 
     def do_playlist(self):
@@ -573,6 +576,78 @@ class Plugin(object):
                 xbmcplugin.endOfDirectory(self.handle, succeeded=False)
                 xbmc.executebuiltin("Container.Update(%s,replace)" % self.url(action="playlists"))
                 return
+        self._end_action()
+
+    # ── radio search ─────────────────────────────────────────────────────
+    def do_pl_search_radio(self):
+        """Search Radio Browser by name and let the user pick a result to add."""
+        query = xbmcgui.Dialog().input(_(30114)).strip()
+        if not query:
+            self._end_action()
+            return
+
+        progress = xbmcgui.DialogProgressBG()
+        progress.create(ADDON_NAME, "Searching...")
+        try:
+            # Fetch the raw results so we can build a selection list
+            results = radiobrowser.search_raw(query, limit=50)
+        except Exception as e:
+            progress.close()
+            xbmcgui.Dialog().ok(_(30017), str(e))
+            self._end_action()
+            return
+        finally:
+            progress.close()
+
+        if not results:
+            xbmcgui.Dialog().ok(ADDON_NAME, "No stations found for '%s'" % query)
+            self._end_action()
+            return
+
+        # Build the selection list (Format: "Station Name (Country)")
+        labels = []
+        for s in results:
+            name = (s.get("name") or "").strip()
+            country = (s.get("country") or "").strip()
+            label = "%s (%s)" % (name, country) if country else name
+            labels.append(label)
+
+        # Show the dialog (Kodi automatically adds a Cancel option at the end)
+        index = xbmcgui.Dialog().select("Results for: %s" % query, labels)
+        if index < 0:
+            # User pressed Cancel
+            self._end_action()
+            return
+
+        # The user picked a station: build the entry and save it
+        chosen = results[index]
+        url = (chosen.get("url_resolved") or chosen.get("url") or "").strip()
+        
+        if not url:
+            xbmcgui.Dialog().ok(ADDON_NAME, "This station has no valid stream URL.")
+            self._end_action()
+            return
+
+        tags = [t.strip().lower() for t in (chosen.get("tags") or "").split(",") if t.strip()]
+        group = tags[0].title() if tags else "Radio"
+        
+        entry = {
+            "name": chosen.get("name", "").strip(),
+            "logo": (chosen.get("favicon") or "").strip(),
+            "group": group,
+            "url": url,
+            "type": m3u.RADIO
+        }
+
+        # Create a playlist named after the station (or a general "Search Results")
+        playlist_name = "Search: %s" % entry["name"]
+        playlist = self.store.add_playlist(playlist_name, "", KIND_RADIO, m3u.TYPE_RADIO)
+        
+        # Save the single entry
+        self.store.save_entries(playlist["id"], [entry])
+        _notify("Added %s" % entry["name"])
+        
+        # Refresh the playlists view to show the new addition
         self._end_action()
 
      # ── export ───────────────────────────────────────────────────────────

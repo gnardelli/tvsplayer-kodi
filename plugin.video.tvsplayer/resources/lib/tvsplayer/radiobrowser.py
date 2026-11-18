@@ -116,3 +116,9 @@ def stations_for(src, limit=500):
     if _is_tag_source(src):
         return genre_stations(_tag_of(src), limit)
     return stations(country_of(src), limit)
+    
+def search_raw(query, limit=50):
+    """Returns the raw API response for a name search (used for selection dialogs)."""
+    # Using the exact endpoint you provided, but keeping it strict to 50 results
+    return _get("/json/stations/search?name=%s&hidebroken=true&order=name&reverse=true&limit=%d"
+                % (net.quote(query), limit))    
