@@ -206,9 +206,37 @@ msgid "Link check timeout (seconds)"
 msgstr "Délai de vérification des liens (secondes)"
 
 msgctxt "#30103"
-msgid "Radio stations to load per country"
-msgstr "Radios à charger par pays"
+msgid "Radio stations to load per category"
+msgstr "Nombre de stations de radio à charger par catégorie"
 
 msgctxt "#30104"
 msgid "First start done"
-msgstr "Premier démarrage effectué"
+msgstr "Première configuration terminée"
+
+msgctxt "#30105"
+msgid "Add free radio stations by genre"
+msgstr "Ajouter des stations de radio gratuites par genre"
+
+msgctxt "#30106"
+msgid "Choose a genre"
+msgstr "Choisir un genre"
+
+msgctxt "#30107"
+msgid "Genre"
+msgstr "Genre"
+
+msgctxt "#30108"
+msgid "Save playlist as M3U"
+msgstr "Enregistrer la playlist au format M3U"
+
+msgctxt "#30109"
+msgid "Playlist saved"
+msgstr "Playlist enregistrée"
+
+msgctxt "#30110"
+msgid "Could not save the playlist"
+msgstr "Impossible d’enregistrer la playlist"
+
+msgctxt "#30111"
+msgid "Add all to TVS favourites"
+msgstr "Ajouter tout aux favoris TVS"

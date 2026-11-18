@@ -206,9 +206,37 @@ msgid "Link check timeout (seconds)"
 msgstr "リンク確認のタイムアウト（秒）"
 
 msgctxt "#30103"
-msgid "Radio stations to load per country"
-msgstr "国ごとに読み込むラジオ局の数"
+msgid "Radio stations to load per category"
+msgstr "カテゴリごとに読み込むラジオ局数"
 
 msgctxt "#30104"
 msgid "First start done"
-msgstr "初回起動済み"
+msgstr "初回起動が完了しました"
+
+msgctxt "#30105"
+msgid "Add free radio stations by genre"
+msgstr "ジャンル別に無料ラジオ局を追加"
+
+msgctxt "#30106"
+msgid "Choose a genre"
+msgstr "ジャンルを選択"
+
+msgctxt "#30107"
+msgid "Genre"
+msgstr "ジャンル"
+
+msgctxt "#30108"
+msgid "Save playlist as M3U"
+msgstr "プレイリストをM3U形式で保存"
+
+msgctxt "#30109"
+msgid "Playlist saved"
+msgstr "プレイリストを保存しました"
+
+msgctxt "#30110"
+msgid "Could not save the playlist"
+msgstr "プレイリストを保存できませんでした"
+
+msgctxt "#30111"
+msgid "Add all to TVS favourites"
+msgstr "すべてTVSのお気に入りに追加"

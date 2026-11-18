@@ -215,7 +215,7 @@ msgid "First start done"
 msgstr ""
 
 msgctxt "#30105"
-msgid "Free radio stations by genre"
+msgid "Add free radio stations by genre"
 msgstr ""
 
 msgctxt "#30106"
