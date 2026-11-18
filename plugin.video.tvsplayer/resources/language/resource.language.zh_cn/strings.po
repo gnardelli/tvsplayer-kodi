@@ -248,3 +248,7 @@ msgstr "删除所有收藏夹"
 msgctxt "#30113"
 msgid "Are you sure you want to delete all favourites?"
 msgstr "您确定要删除所有收藏夹吗？"
+
+msgctxt "#30114"
+msgid "Search Internet Radio Station"
+msgstr "搜索网络广播电台"

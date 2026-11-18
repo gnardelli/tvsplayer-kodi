@@ -248,3 +248,7 @@ msgstr "Usuń wszystkie ulubione"
 msgctxt "#30113"
 msgid "Are you sure you want to delete all favourites?"
 msgstr "Czy na pewno chcesz usunąć wszystkie ulubione?"
+
+msgctxt "#30114"
+msgid "Search Internet Radio Station"
+msgstr "Wyszukaj internetową stację radiową"

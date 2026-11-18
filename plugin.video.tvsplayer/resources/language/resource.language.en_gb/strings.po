@@ -249,3 +249,7 @@ msgstr ""
 msgctxt "#30113"
 msgid "Are you sure you want to delete all favourites?"
 msgstr ""
+
+msgctxt "#30114"
+msgid "Search Internet Radio Station"
+msgstr ""
