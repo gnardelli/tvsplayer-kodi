@@ -240,3 +240,11 @@ msgstr "Nie udało się zapisać listy odtwarzania"
 msgctxt "#30111"
 msgid "Add all to TVS favourites"
 msgstr "Dodaj wszystkie do ulubionych w TVS"
+
+msgctxt "#30112"
+msgid "Delete all favourites"
+msgstr "Usuń wszystkie ulubione"
+
+msgctxt "#30113"
+msgid "Are you sure you want to delete all favourites?"
+msgstr "Czy na pewno chcesz usunąć wszystkie ulubione?"

@@ -240,3 +240,11 @@ msgstr "Impossibile salvare la playlist"
 msgctxt "#30111"
 msgid "Add all to TVS favourites"
 msgstr "Aggiungi tutti ai preferiti di TVS"
+
+msgctxt "#30112"
+msgid "Delete all favourites"
+msgstr "Elimina tutti i preferiti"
+
+msgctxt "#30113"
+msgid "Are you sure you want to delete all favourites?"
+msgstr "Sei sicuro di voler eliminare tutti i preferiti?"

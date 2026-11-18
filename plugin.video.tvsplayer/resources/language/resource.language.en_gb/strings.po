@@ -241,3 +241,11 @@ msgstr ""
 msgctxt "#30111"
 msgid "Add all to TVS favourites"
 msgstr ""
+
+msgctxt "#30112"
+msgid "Delete all favourites"
+msgstr ""
+
+msgctxt "#30113"
+msgid "Are you sure you want to delete all favourites?"
+msgstr ""

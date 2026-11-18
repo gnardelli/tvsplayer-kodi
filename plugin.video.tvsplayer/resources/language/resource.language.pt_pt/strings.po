@@ -240,3 +240,11 @@ msgstr "Não foi possível guardar a lista de reprodução"
 msgctxt "#30111"
 msgid "Add all to TVS favourites"
 msgstr "Adicionar tudo aos favoritos do TVS"
+
+msgctxt "#30112"
+msgid "Delete all favourites"
+msgstr "Apagar todos os favoritos"
+
+msgctxt "#30113"
+msgid "Are you sure you want to delete all favourites?"
+msgstr "Tem a certeza de que pretende eliminar todos os favoritos?"

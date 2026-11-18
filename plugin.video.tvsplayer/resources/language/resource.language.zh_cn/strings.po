@@ -240,3 +240,11 @@ msgstr "无法保存播放列表"
 msgctxt "#30111"
 msgid "Add all to TVS favourites"
 msgstr "全部添加到 TVS 收藏夹"
+
+msgctxt "#30112"
+msgid "Delete all favourites"
+msgstr "删除所有收藏夹"
+
+msgctxt "#30113"
+msgid "Are you sure you want to delete all favourites?"
+msgstr "您确定要删除所有收藏夹吗？"
