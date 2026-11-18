@@ -269,6 +269,11 @@ class Plugin(object):
             xbmcplugin.addDirectoryItem(
                 self.handle, self.url(action="play_url", url=fav["url"], name=fav["name"], type=fav["type"]),
                 item, isFolder=False)
+        
+        # Add the export option at the bottom of the Favorites list
+        self._folder(_(30108), "DefaultFileItem.png", action="fav_export")
+        self._folder(_(30112), "DefaultIconError.png", action="fav_delete_all")
+        
         self._end("videos")
 
     def do_fav_remove(self):
@@ -278,6 +283,84 @@ class Plugin(object):
     def do_fav_move(self):
         self.store.move_favorite(self.params.get("url", ""), int(self.params.get("offset", "0")))
         xbmc.executebuiltin("Container.Refresh")
+        
+    def do_fav_export(self):
+        """Export favourites to an M3U file."""
+        try:
+            self._export_favorites()
+        finally:
+            self._end_action()
+
+    def do_fav_delete_all(self):
+        """Delete all favourites after user confirmation."""
+        if xbmcgui.Dialog().yesno(ADDON_NAME, _(30113)):
+            # Assuming store has a method to clear favorites. 
+            # If not, we iterate and remove them.
+            favs = self.store.favorites()
+            for fav in favs:
+                self.store.remove_favorite(fav["url"])
+            xbmc.executebuiltin("Container.Refresh")
+        self._end_action()
+
+    def _export_favorites(self):
+        favs = self.store.favorites()
+        if not favs:
+            xbmcgui.Dialog().ok(ADDON_NAME, _(30110))
+            return
+
+        entries = []
+        for fav in favs:
+            entries.append({
+                "name": fav["name"], 
+                "logo": fav["logo"],
+                "group": fav["group"], 
+                "url": fav["url"], 
+                "type": fav["type"]
+            })
+
+        # 1) Ask for a file name (default = "favorites")
+        name = xbmcgui.Dialog().input(_(30108), "favorites")
+        if not name:
+            return
+        name = self._safe_filename(name)
+        if not name:
+            xbmcgui.Dialog().ok(ADDON_NAME, _(30110))
+            return
+        if not name.lower().endswith(".m3u"):
+            name += ".m3u"
+
+        # 2) Ask for the folder
+        folder = xbmcgui.Dialog().browseSingle(0, _(30108), "files")
+        if not folder:
+            return
+        folder = folder.rstrip("\\/")
+        path = xbmcvfs.makeLegalFilename(folder + "/" + name)
+
+        # 3) Write the file
+        data = m3u.export(entries).encode("utf-8")
+        written = False
+        try:
+            f = xbmcvfs.File(path, "w")
+            try:
+                f.write(data)
+            finally:
+                f.close()
+            written = xbmcvfs.exists(path)
+        except Exception:
+            written = False
+        if not written:
+            try:
+                with open(_translate_path(path) if path.startswith("special://") else path, "wb") as f:
+                    f.write(data)
+                written = True
+            except Exception as e:
+                xbmcgui.Dialog().ok(_(30110), str(e))
+                return
+
+        if written:
+            _notify("%s: %s" % (_(30109), name))
+        else:
+            xbmcgui.Dialog().ok(_(30110), path)
         
     def do_fav_group_add(self):
         playlist_id = self.params.get("pl", "")
