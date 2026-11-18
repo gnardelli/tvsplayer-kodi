@@ -272,8 +272,8 @@ class Plugin(object):
                 item, isFolder=False)
         
         # Add the export option at the bottom of the Favorites list
-        self._folder(_(30108), "DefaultFileItem.png", action="fav_export")
-        self._folder(_(30112), "DefaultIconError.png", action="fav_delete_all")
+        self._folder(_(30108), "DefaultFile.png", action="fav_export")
+        self._folder(_(30112), "DefaultIconWarning.png", action="fav_delete_all")
         
         self._end("videos")
 
@@ -440,9 +440,9 @@ class Plugin(object):
             self._folder(_(30043), "DefaultTVShows.png", action="groups", type=m3u.TV, pl=p["id"])
         if self.store.groups(m3u.RADIO, p["id"]):
             self._folder(_(30044), "DefaultMusicSongs.png", action="groups", type=m3u.RADIO, pl=p["id"])
-        self._folder(_(30108), "DefaultFileItem.png", action="pl_export", id=p["id"])
+        self._folder(_(30108), "DefaultFile.png", action="pl_export", id=p["id"])
         self._folder(_(30018), "DefaultAddonsUpdates.png", action="pl_refresh", id=p["id"])
-        self._folder(_(30019), "DefaultIconError.png", action="pl_delete", id=p["id"])
+        self._folder(_(30019), "DefaultIconWarning.png", action="pl_delete", id=p["id"])
         self._end()
 
     def _load(self, playlist):
