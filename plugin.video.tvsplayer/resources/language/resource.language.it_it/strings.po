@@ -94,8 +94,8 @@ msgid "Delete \"{0}\"? Its channels are removed. Favourites stay."
 msgstr "Eliminare \"{0}\"? I suoi canali vengono rimossi. I preferiti restano."
 
 msgctxt "#30021"
-msgid "Add to favourites"
-msgstr "Aggiungi ai preferiti"
+msgid "Add to TVS favourites"
+msgstr "Aggiungi ai preferiti di TVS"
 
 msgctxt "#30022"
 msgid "Remove from favourites"
