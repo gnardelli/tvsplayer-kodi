@@ -272,8 +272,10 @@ class Plugin(object):
                 item, isFolder=False)
         
         # Add the export option at the bottom of the Favorites list
-        self._folder(_(30108), "DefaultFile.png", action="fav_export")
-        self._folder(_(30112), "DefaultIconWarning.png", action="fav_delete_all")
+        fav_label_export = "[B][COLOR blue]%s[/COLOR][/B]" % _(30108)
+        fav_label_delete = "[B][COLOR yellow]%s[/COLOR][/B]" % _(30112)
+        self._folder((fav_label_export), "DefaultFile.png", action="fav_export")
+        self._folder((fav_label_delete), "DefaultIconWarning.png", action="fav_delete_all")
         
         self._end("videos")
 
