@@ -94,8 +94,8 @@ msgid "Delete \"{0}\"? Its channels are removed. Favourites stay."
 msgstr "Eliminar «{0}»? Os canais são removidos. Os favoritos ficam."
 
 msgctxt "#30021"
-msgid "Add to favourites"
-msgstr "Adicionar aos favoritos"
+msgid "Add to TVS favourites"
+msgstr "Adicionar aos favoritos da TVS"
 
 msgctxt "#30022"
 msgid "Remove from favourites"
@@ -206,9 +206,77 @@ msgid "Link check timeout (seconds)"
 msgstr "Tempo máximo da verificação (segundos)"
 
 msgctxt "#30103"
-msgid "Radio stations to load per country"
-msgstr "Rádios a carregar por país"
+msgid "Radio stations to load per category"
+msgstr "Estações de rádio a carregar por categoria"
 
 msgctxt "#30104"
 msgid "First start done"
-msgstr "Primeiro arranque feito"
+msgstr "Configuração inicial concluída"
+
+msgctxt "#30105"
+msgid "Add free radio stations by genre"
+msgstr "Adicionar estações de rádio gratuitas por género"
+
+msgctxt "#30106"
+msgid "Choose a genre"
+msgstr "Escolha um género"
+
+msgctxt "#30107"
+msgid "Genre"
+msgstr "Género"
+
+msgctxt "#30108"
+msgid "Save playlist as M3U"
+msgstr "Guardar lista de reprodução como M3U"
+
+msgctxt "#30109"
+msgid "Playlist saved"
+msgstr "Lista de reprodução guardada"
+
+msgctxt "#30110"
+msgid "Could not save the playlist"
+msgstr "Não foi possível guardar a lista de reprodução"
+
+msgctxt "#30111"
+msgid "Add all to TVS favourites"
+msgstr "Adicionar tudo aos favoritos do TVS"
+
+msgctxt "#30112"
+msgid "Delete all favourites"
+msgstr "Apagar todos os favoritos"
+
+msgctxt "#30113"
+msgid "Are you sure you want to delete all favourites?"
+msgstr "Tem a certeza de que pretende eliminar todos os favoritos?"
+
+msgctxt "#30114"
+msgid "Search Internet Radio Station"
+msgstr "Pesquisar estação de rádio na Internet"
+
+msgctxt "#30115"
+msgid "This station has no valid stream URL."
+msgstr "Esta estação não tem um URL de transmissão válido."
+
+msgctxt "#30116"
+msgid "No stations found for '%s'"
+msgstr "Não foram encontradas estações para «%s»"
+
+msgctxt "#30117"
+msgid "Searching..."
+msgstr "A pesquisar..."
+
+msgctxt "#30118"
+msgid "Results for: %s"
+msgstr "Resultados para: %s"
+
+msgctxt "#30119"
+msgid "Search: %s"
+msgstr "Pesquisar: %s"
+
+msgctxt "#30120"
+msgid "Added %d channels to favourites"
+msgstr "Foram adicionados %d canais aos favoritos"
+
+msgctxt "#30121"
+msgid "No channels found to add"
+msgstr "Não foram encontrados canais para adicionar"

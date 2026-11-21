@@ -94,7 +94,7 @@ msgid "Delete \"{0}\"? Its channels are removed. Favourites stay."
 msgstr ""
 
 msgctxt "#30021"
-msgid "Add to favourites"
+msgid "Add to TVS favourites"
 msgstr ""
 
 msgctxt "#30022"
@@ -207,9 +207,77 @@ msgid "Link check timeout (seconds)"
 msgstr ""
 
 msgctxt "#30103"
-msgid "Radio stations to load per country"
+msgid "Radio stations to load per category"
 msgstr ""
 
 msgctxt "#30104"
 msgid "First start done"
+msgstr ""
+
+msgctxt "#30105"
+msgid "Add free radio stations by genre"
+msgstr ""
+
+msgctxt "#30106"
+msgid "Choose a genre"
+msgstr ""
+
+msgctxt "#30107"
+msgid "Genre"
+msgstr ""
+
+msgctxt "#30108"
+msgid "Save playlist as M3U"
+msgstr ""
+
+msgctxt "#30109"
+msgid "Playlist saved"
+msgstr ""
+
+msgctxt "#30110"
+msgid "Could not save the playlist"
+msgstr ""
+
+msgctxt "#30111"
+msgid "Add all to TVS favourites"
+msgstr ""
+
+msgctxt "#30112"
+msgid "Delete all favourites"
+msgstr ""
+
+msgctxt "#30113"
+msgid "Are you sure you want to delete all favourites?"
+msgstr ""
+
+msgctxt "#30114"
+msgid "Search Internet Radio Station"
+msgstr ""
+
+msgctxt "#30115"
+msgid "This station has no valid stream URL."
+msgstr ""
+
+msgctxt "#30116"
+msgid "No stations found for '%s'"
+msgstr ""
+
+msgctxt "#30117"
+msgid "Searching..."
+msgstr ""
+
+msgctxt "#30118"
+msgid "Results for: %s"
+msgstr ""
+
+msgctxt "#30119"
+msgid "Search: %s"
+msgstr ""
+
+msgctxt "#30120"
+msgid "Added %d channels to favourites"
+msgstr ""
+
+msgctxt "#30121"
+msgid "No channels found to add"
 msgstr ""
