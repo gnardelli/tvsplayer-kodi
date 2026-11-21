@@ -252,3 +252,31 @@ msgstr "您确定要删除所有收藏夹吗？"
 msgctxt "#30114"
 msgid "Search Internet Radio Station"
 msgstr "搜索网络广播电台"
+
+msgctxt "#30115"
+msgid "This station has no valid stream URL."
+msgstr "此电台没有有效的流媒体 URL。"
+
+msgctxt "#30116"
+msgid "No stations found for '%s'"
+msgstr "未找到与“%s”相关的电台"
+
+msgctxt "#30117"
+msgid "Searching..."
+msgstr "正在搜索…"
+
+msgctxt "#30118"
+msgid "Results for: %s"
+msgstr "“%s”的搜索结果"
+
+msgctxt "#30119"
+msgid "Search: %s"
+msgstr "搜索：%s"
+
+msgctxt "#30120"
+msgid "Added %d channels to favourites"
+msgstr "已将 %d 个频道添加到收藏夹"
+
+msgctxt "#30121"
+msgid "No channels found to add"
+msgstr "未找到可添加的频道"

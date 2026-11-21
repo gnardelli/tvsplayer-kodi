@@ -252,3 +252,31 @@ msgstr "Sind Sie sicher, dass Sie alle Favoriten löschen möchten?"
 msgctxt "#30114"
 msgid "Search Internet Radio Station"
 msgstr "Internetradiosender suchen"
+
+msgctxt "#30115"
+msgid "This station has no valid stream URL."
+msgstr "Für diesen Sender ist keine gültige Stream-URL vorhanden."
+
+msgctxt "#30116"
+msgid "No stations found for '%s'"
+msgstr "Keine Sender für „%s“ gefunden"
+
+msgctxt "#30117"
+msgid "Searching..."
+msgstr "Suche läuft …"
+
+msgctxt "#30118"
+msgid "Results for: %s"
+msgstr "Ergebnisse für: %s"
+
+msgctxt "#30119"
+msgid "Search: %s"
+msgstr "Suche: %s"
+
+msgctxt "#30120"
+msgid "Added %d channels to favourites"
+msgstr "%d Sender zu den Favoriten hinzugefügt"
+
+msgctxt "#30121"
+msgid "No channels found to add"
+msgstr "Keine Sender zum Hinzufügen gefunden"

@@ -252,3 +252,31 @@ msgstr "お気に入りをすべて削除してもよろしいですか？"
 msgctxt "#30114"
 msgid "Search Internet Radio Station"
 msgstr "インターネットラジオ局を検索"
+
+msgctxt "#30115"
+msgid "This station has no valid stream URL."
+msgstr "このステーションには有効なストリームURLがありません。"
+
+msgctxt "#30116"
+msgid "No stations found for '%s'"
+msgstr "「%s」に該当するステーションが見つかりません"
+
+msgctxt "#30117"
+msgid "Searching..."
+msgstr "検索中..."
+
+msgctxt "#30118"
+msgid "Results for: %s"
+msgstr "%s の検索結果"
+
+msgctxt "#30119"
+msgid "Search: %s"
+msgstr "検索: %s"
+
+msgctxt "#30120"
+msgid "Added %d channels to favourites"
+msgstr "%d チャンネルをお気に入りに追加しました"
+
+msgctxt "#30121"
+msgid "No channels found to add"
+msgstr "追加できるチャンネルが見つかりません"

@@ -253,3 +253,31 @@ msgstr ""
 msgctxt "#30114"
 msgid "Search Internet Radio Station"
 msgstr ""
+
+msgctxt "#30115"
+msgid "This station has no valid stream URL."
+msgstr ""
+
+msgctxt "#30116"
+msgid "No stations found for '%s'"
+msgstr ""
+
+msgctxt "#30117"
+msgid "Searching..."
+msgstr ""
+
+msgctxt "#30118"
+msgid "Results for: %s"
+msgstr ""
+
+msgctxt "#30119"
+msgid "Search: %s"
+msgstr ""
+
+msgctxt "#30120"
+msgid "Added %d channels to favourites"
+msgstr ""
+
+msgctxt "#30121"
+msgid "No channels found to add"
+msgstr ""
