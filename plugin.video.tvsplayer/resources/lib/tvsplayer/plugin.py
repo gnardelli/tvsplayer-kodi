@@ -389,9 +389,9 @@ class Plugin(object):
             added += 1
 
         if added:
-            _notify("Added %d channels to favourites" % added)
+            _notify(_(30120) % added)
         else:
-            _notify("No channels found to add", error=True)       
+            _notify(_(30121), error=True)       
 
     # ── search ───────────────────────────────────────────────────────────
     def do_search_ask(self):
@@ -589,7 +589,7 @@ class Plugin(object):
             return
 
         progress = xbmcgui.DialogProgressBG()
-        progress.create(ADDON_NAME, "Searching...")
+        progress.create(ADDON_NAME, _(30117))   # "Searching..."
         try:
             # Fetch the raw results so we can build a selection list
             results = radiobrowser.search_raw(query, limit=50)
@@ -602,7 +602,7 @@ class Plugin(object):
             progress.close()
 
         if not results:
-            xbmcgui.Dialog().ok(ADDON_NAME, "No stations found for '%s'" % query)
+            xbmcgui.Dialog().ok(ADDON_NAME, _(30116) % query)
             self._end_action()
             return
 
@@ -615,7 +615,7 @@ class Plugin(object):
             labels.append(label)
 
         # Show the dialog (Kodi automatically adds a Cancel option at the end)
-        index = xbmcgui.Dialog().select("Results for: %s" % query, labels)
+        index = xbmcgui.Dialog().select(_(30118) % query, labels)  # "Results for: %s"
         if index < 0:
             # User pressed Cancel
             self._end_action()
@@ -626,7 +626,7 @@ class Plugin(object):
         url = (chosen.get("url_resolved") or chosen.get("url") or "").strip()
         
         if not url:
-            xbmcgui.Dialog().ok(ADDON_NAME, "This station has no valid stream URL.")
+            xbmcgui.Dialog().ok(ADDON_NAME, _(30115))
             self._end_action()
             return
 
@@ -642,7 +642,7 @@ class Plugin(object):
         }
 
         # Create a playlist named after the station (or a general "Search Results")
-        playlist_name = "Search: %s" % entry["name"]
+        playlist_name = _(30119) % entry["name"]  # "Search: %s"
         playlist = self.store.add_playlist(playlist_name, "", KIND_RADIO, m3u.TYPE_RADIO)
         
         # Save the single entry
